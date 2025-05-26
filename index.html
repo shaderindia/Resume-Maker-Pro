@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elite Resume Builder</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        lato: ['Lato', 'sans-serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#4F46E5', // Indigo 600
+                        secondary: '#6366F1', // Indigo 500
+                        accent: '#818CF8', // Indigo 400
+                        light: '#E0E7FF', // Indigo 100
+                        dark: '#1F2937', // Gray 800 - Used for general dark text
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #374151;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' ..."); /* Simplified for brevity */
+            background-size: 60px 60px;
+        }
+        .container {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        #resume-content {
+            width: 794px; /* A4 width in pixels */
+            min-height: 1123px; /* A4 height in pixels */
+            padding: 1cm;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #resume-output, #resume-output * {
+                visibility: visible;
+            }
+            #resume-content {
+                width: 210mm;
+                min-height: 297mm;
+                margin: 0;
+                border: none;
+                padding: 10mm;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Elite Resume Builder</h1>
+        <form id="resume-form">
+            <!-- Form Fields Here -->
+        </form>
+        <div id="resume-output" class="hidden">
+            <h2>Generated Resume Preview</h2>
+            <div id="resume-content"></div>
+            <div class="output-actions">
+                <button id="download-jpg" class="btn-primary">Download JPG</button>
+                <button id="download-png" class="btn-secondary">Download PNG</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Updated JavaScript below
+    </script>
+</body>
+</html>
