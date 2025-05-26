@@ -1,0 +1,42 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.container {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+#resume-content {
+    width: 794px; /* A4 width in pixels */
+    min-height: 1123px; /* A4 height in pixels */
+    padding: 1cm;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #resume-output, #resume-output * {
+        visibility: visible;
+    }
+    #resume-content {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0;
+        border: none;
+        padding: 10mm;
+        box-shadow: none;
+    }
+}
