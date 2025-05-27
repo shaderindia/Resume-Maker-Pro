@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CV Builder - Nishikant Xalxo</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="downloadCV('normal')">Download (Normal)</button>
+    <button onclick="downloadCV('high')">Download (Very High)</button>
+    <select id="formatSelect">
+      <option value="pdf">PDF</option>
+      <option value="png">PNG</option>
+      <option value="jpg">JPG</option>
+    </select>
+  </div>
+
+  <div id="cv" class="a4">
+    <aside class="sidebar">
+      <img src="img/user.png" alt="Profile" class="profile-pic"/>
+      <div class="section">
+        <h2>Contact</h2>
+        <p>Email: dwigharmst@gmail.com</p>
+        <p>Phone: (973) 785 6124</p>
+        <p>Address: Lake Madelyntown, NC</p>
+      </div>
+      <div class="section">
+        <h2>Education</h2>
+        <p><strong>Associate Degree</strong><br/>Machining Tech<br/>2017 - 2021</p>
+      </div>
+      <div class="section">
+        <h2>Skills</h2>
+        <ul>
+          <li>CNC Machining - Expert</li>
+          <li>Tooling Setup - Expert</li>
+          <li>Machining Processes - Expert</li>
+          <li>Quality Control - Expert</li>
+          <li>Precision Measurement - Expert</li>
+          <li>Troubleshooting - Expert</li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content">
+      <h1>Dwigh Armst</h1>
+      <h2>Machinist</h2>
+      <section>
+        <h3>Summary</h3>
+        <p>Experienced Machinist with proven ability to set up and operate a variety of machines...</p>
+      </section>
+      <section>
+        <h3>Work Experience</h3>
+        <p><strong>Machinist, Huel, Schiller and Gerhold</strong><br/>March 2023 - Present</p>
+        <ul>
+          <li>Operated CNC lathe machines for 5+ years</li>
+          <li>Experienced in manual and CNC milling</li>
+          <li>Read blueprints and engineering docs</li>
+        </ul>
+        <p><strong>Machinist, Leuschke Inc</strong><br/>May 2021 - Feb 2023</p>
+        <ul>
+          <li>Used measuring tools for accuracy</li>
+          <li>Met weekly goals while maintaining quality</li>
+          <li>Programmed and adjusted CNC machinery</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Declaration</h3>
+        <p>I hereby declare that all the information provided is true to the best of my knowledge and belief.</p>
+      </section>
+      <footer>Designed by Nishikant Xalxo</footer>
+    </main>
+  </div>
+
+  <script src="js/html2canvas.min.js"></script>
+  <script src="js/jspdf.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
