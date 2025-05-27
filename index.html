@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume Builder - Nishikant Xalxo</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="downloadCV('normal')">Download (Normal)</button>
+    <button onclick="downloadCV('high')">Download (Very High)</button>
+    <select id="formatSelect">
+      <option value="pdf">PDF</option>
+      <option value="png">PNG</option>
+      <option value="jpg">JPG</option>
+    </select>
+  </div>
+
+  <div class="container">
+    <div class="form">
+      <h2>Enter Your Details</h2>
+      <label>Name: <input id="nameInput" oninput="updatePreview()" /></label>
+      <label>Title: <input id="titleInput" oninput="updatePreview()" /></label>
+      <label>Email: <input id="emailInput" oninput="updatePreview()" /></label>
+      <label>Phone: <input id="phoneInput" oninput="updatePreview()" /></label>
+      <label>Address: <input id="addressInput" oninput="updatePreview()" /></label>
+      <label>Summary:<br/><textarea id="summaryInput" oninput="updatePreview()"></textarea></label>
+      <label>Skills (comma-separated): <input id="skillsInput" oninput="updatePreview()" /></label>
+      <label>Declaration:<br/><textarea id="declarationInput" oninput="updatePreview()"></textarea></label>
+    </div>
+
+    <div id="cv" class="cv-preview a4">
+      <aside class="sidebar">
+        <div class="section">
+          <h2>Contact</h2>
+          <p id="emailPreview"></p>
+          <p id="phonePreview"></p>
+          <p id="addressPreview"></p>
+        </div>
+        <div class="section">
+          <h2>Skills</h2>
+          <ul id="skillsPreview"></ul>
+        </div>
+      </aside>
+      <main class="content">
+        <h1 id="namePreview">Your Name</h1>
+        <h2 id="titlePreview">Your Title</h2>
+        <section>
+          <h3>Summary</h3>
+          <p id="summaryPreview"></p>
+        </section>
+        <section>
+          <h3>Declaration</h3>
+          <p id="declarationPreview">I hereby declare that...</p>
+        </section>
+        <footer>Designed by Nishikant Xalxo</footer>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/html2canvas.min.js"></script>
+  <script src="js/jspdf.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
