@@ -1,99 +1,145 @@
-
+/* General Reset */
 body {
-  font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  padding: 0;
-  background: #f4f4f4;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
   color: #333;
-  transition: background 0.3s, color 0.3s;
 }
-body.dark {
-  background: #121212;
-  color: #eee;
-}
-.app {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 25px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-body.dark .app {
-  background: #1e1e1e;
-}
+
+/* Toolbar */
 .toolbar {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin: 10px auto;
+  gap: 15px;
+  padding: 15px 20px;
+  background-color: #007BFF;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
+
 .toolbar button {
-  padding: 8px 15px;
-  background: #1e88e5;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: white;
+  background-color: #0056b3;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.toolbar button:hover {
+  background-color: #003d80;
+}
+
+/* App Container */
+.app {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.app h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #007BFF;
+}
+
+.section label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.section input,
+.section textarea,
+.section select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* CV Preview */
+.a4-page {
+  width: 210mm;
+  height: 297mm;
+  background: #ffffff;
+  margin: 20px auto;
+  padding: 20mm;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  display: flex;
+  flex-direction: row;
+}
+
+aside {
+  width: 30%;
+  background: #f4f4f4;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .a4-page {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+  }
+
+  aside {
+    width: 100%;
+    text-align: left;
+  }
+
+  main {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+/* Download Section */
+.download-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.download-section button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007BFF;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
-input, textarea, select, button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 4px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-textarea {
-  resize: vertical;
-  min-height: 60px;
-}
-.a4-page {
-  width: 210mm;
-  min-height: 297mm;
-  background: white;
-  margin: 30px auto;
-  padding: 20mm;
-  display: flex;
-  box-sizing: border-box;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
-}
-.a4-page aside {
-  width: 35%;
-  padding-right: 10px;
-  border-right: 2px solid #ccc;
-}
-.a4-page main {
-  width: 65%;
-  padding-left: 10px;
-}
-.profile-pic {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #1e88e5;
-  margin-bottom: 15px;
-}
-footer {
-  margin-top: 30px;
-}
-footer img {
-  vertical-align: middle;
-  margin-right: 6px;
-}
-.template1 { background: white; }
-.template2 { background: #e0f7fa; }
 
-.credits {
-  text-align: center;
-  background: #f0f0f0;
-  padding: 10px;
-  font-size: 16px;
-}
-.a4-page {
-  width: 210mm;
-  height: 297mm;
-  padding: 20mm;
-  overflow: hidden;
+.download-section button:hover {
+  background-color: #0056b3;
 }
