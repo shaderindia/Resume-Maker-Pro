@@ -1,126 +1,51 @@
-
-let cropper;
-let templateIndex = 0;
-const templates = ["template1", "template2"];
-
-document.getElementById('photoInput').addEventListener('change', function (e) {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function (event) {
-    const image = document.getElementById('cropperImage');
-    image.src = event.target.result;
-    document.getElementById('cropperContainer').style.display = 'block';
-
-    if (cropper) cropper.destroy();
-    cropper = new Cropper(image, {
-      aspectRatio: 1,
-      viewMode: 1,
-      responsive: true,
-      zoomable: true,
-      scalable: true,
-    });
-  };
-  reader.readAsDataURL(file);
-});
-
-document.getElementById('cropImageBtn').addEventListener('click', function () {
-  if (cropper) {
-    const croppedCanvas = cropper.getCroppedCanvas({ width: 300, height: 300 });
-    const croppedImage = croppedCanvas.toDataURL('image/png');
-    document.getElementById('cvPhoto').src = croppedImage;
-    localStorage.setItem('cvPhoto', croppedImage);
-    document.getElementById('cropperContainer').style.display = 'none';
-  }
-});
-
-document.getElementById('cvForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-  updateCV();
-  saveToLocalStorage();
-  window.scrollTo({ top: document.getElementById('cvPreview').offsetTop, behavior: 'smooth' });
-});
-
-function updateCV() {
-  const get = id => document.getElementById(id).value;
-  document.getElementById('cvName').textContent = get('name');
-  document.getElementById('cvDesignation').textContent = get('designation');
-  document.getElementById('cvEmail').textContent = '📧 ' + get('email');
-  document.getElementById('cvPhone').textContent = '📞 ' + get('phone');
-  document.getElementById('cvAddress').textContent = '📍 ' + get('address');
-  document.getElementById('cvNationality').textContent = '🌐 ' + get('nationality');
-  document.getElementById('cvDOB').textContent = '🎂 ' + get('dob');
-  document.getElementById('cvGender').textContent = '👤 ' + get('gender');
-  document.getElementById('cvTypeTitle').textContent = get('summaryType');
-  document.getElementById('cvSummaryText').textContent = get('summaryText');
-  document.getElementById('cvExperience').textContent = get('experience');
-  document.getElementById('cvEducation').textContent = get('education');
-  document.getElementById('cvDeclaration').textContent = get('declaration');
-
-  const skills = get('skills').split(',').map(s => s.trim()).filter(s => s);
-  const ul = document.getElementById('cvSkills');
-  ul.innerHTML = '';
-  skills.forEach(skill => {
-    const li = document.createElement('li');
-    li.textContent = skill;
-    ul.appendChild(li);
+// Real-Time Preview
+document.querySelectorAll('#cvForm input, #cvForm textarea, #cvForm select').forEach((input) => {
+  input.addEventListener('input', () => {
+    const id = input.id.replace(/([A-Z])/g, '-$1').toLowerCase();
+    const target = document.querySelector(`#cv${id.charAt(0).toUpperCase() + id.slice(1)}`);
+    if (target) target.textContent = input.value;
   });
+});
 
-  const langs = document.getElementById('languages').value.split(',').map(l => l.trim()).filter(l => l);
-  const langUl = document.getElementById('cvLanguages');
-  langUl.innerHTML = '';
-  langs.forEach(lang => {
-    const li = document.createElement('li');
-    li.textContent = lang;
-    langUl.appendChild(li);
-  });
-}
-
-function downloadPDF() {
-  const element = document.getElementById('cvPreview');
-  html2pdf().from(element).set({
-    margin: 0,
-    filename: 'My_CV.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  }).save();
-}
-
+// Toggle Dark Mode
 function toggleDarkMode() {
-  document.body.classList.toggle('dark');
+  document.body.classList.toggle('dark-mode');
 }
+
+// Template Switching
+let currentTemplate = 1;
 
 function switchTemplate() {
   const preview = document.getElementById('cvPreview');
-  preview.classList.remove(templates[templateIndex]);
-  templateIndex = (templateIndex + 1) % templates.length;
-  preview.classList.add(templates[templateIndex]);
+  currentTemplate = (currentTemplate % 3) + 1; // Cycle through 3 templates
+  preview.className = `a4-page template${currentTemplate}`;
 }
 
-function shareCV() {
-  alert("Copy this link to continue your CV later: " + window.location.href);
-}
-
-function saveToLocalStorage() {
-  const fields = ['name', 'designation', 'email', 'phone', 'address', 'nationality', 'dob', 'gender', 'summaryType', 'summaryText', 'skills', 'languages', 'experience', 'education', 'declaration'];
-  fields.forEach(id => {
-    localStorage.setItem(id, document.getElementById(id).value);
-  });
-}
-
-function loadFromLocalStorage() {
-  const fields = ['name', 'designation', 'email', 'phone', 'address', 'nationality', 'dob', 'gender', 'summaryType', 'summaryText', 'skills', 'languages', 'experience', 'education', 'declaration'];
-  fields.forEach(id => {
-    if (localStorage.getItem(id)) {
-      document.getElementById(id).value = localStorage.getItem(id);
-    }
-  });
-  const photo = localStorage.getItem('cvPhoto');
-  if (photo) {
-    document.getElementById('cvPhoto').src = photo;
+// Share the App
+function shareApp() {
+  const appUrl = window.location.href;
+  if (navigator.share) {
+    navigator.share({
+      title: 'Advanced CV Maker',
+      text: 'Create your professional CV with Advanced CV Maker!',
+      url: appUrl,
+    }).catch((error) => console.error('Error sharing:', error));
+  } else {
+    navigator.clipboard.writeText(appUrl).then(() => {
+      alert('App link copied to clipboard!');
+    });
   }
 }
 
-window.onload = loadFromLocalStorage;
+// Download PDF
+function downloadPDF() {
+  const element = document.getElementById('cvPreview');
+  const options = {
+    margin: [10, 10, 10, 10],
+    filename: 'MyCV.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 3 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+  };
+  html2pdf().set(options).from(element).save();
+}
