@@ -1,0 +1,75 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
+.credits {
+  background-color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+.credits a {
+  text-decoration: none;
+  color: #000;
+  display: inline-flex;
+  align-items: center;
+}
+.credits .icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+main {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+.input-form {
+  flex: 1 1 300px;
+  margin-right: 20px;
+}
+.cv-preview {
+  flex: 2 1 600px;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+.section-heading {
+  background-color: #e0e0e0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+.actions {
+  text-align: center;
+  padding: 20px;
+}
+.actions button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+body.dark-mode .cv-preview {
+  background-color: #1e1e1e;
+  border-color: #333;
+}
+body.dark-mode .section-heading {
+  background-color: #333;
+}
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+  .input-form,
+  .cv-preview {
+    flex: 1 1 100%;
+    margin-right: 0;
+  }
+}
