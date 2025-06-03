@@ -17,25 +17,34 @@ let currentTemplate = 1;
 
 function switchTemplate() {
   const preview = document.getElementById('cvPreview');
-  currentTemplate = (currentTemplate % 3) + 1; // Cycle through 3 templates
+  currentTemplate = (currentTemplate % 3) + 1;
   preview.className = `a4-page template${currentTemplate}`;
 }
 
-// Share the App
-function shareApp() {
-  const appUrl = window.location.href;
-  if (navigator.share) {
-    navigator.share({
-      title: 'Advanced CV Maker',
-      text: 'Create your professional CV with Advanced CV Maker!',
-      url: appUrl,
-    }).catch((error) => console.error('Error sharing:', error));
-  } else {
-    navigator.clipboard.writeText(appUrl).then(() => {
-      alert('App link copied to clipboard!');
-    });
+// Cropping Image
+const photoInput = document.getElementById('photoInput');
+const cropperContainer = document.getElementById('cropperContainer');
+let cropper;
+
+photoInput.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const cropperImage = document.getElementById('cropperImage');
+      cropperImage.src = reader.result;
+      cropperContainer.style.display = 'block';
+      cropper = new Cropper(cropperImage, { aspectRatio: 1 });
+    };
+    reader.readAsDataURL(file);
   }
-}
+});
+
+document.getElementById('cropImageBtn').addEventListener('click', () => {
+  const croppedImage = cropper.getCroppedCanvas().toDataURL();
+  document.getElementById('cvPhoto').src = croppedImage;
+  cropperContainer.style.display = 'none';
+});
 
 // Download PDF
 function downloadPDF() {
