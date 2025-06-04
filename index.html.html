@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern CV Maker | By Nishikant Xalxo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --light-text: #6c757d;
+            --bg-color: #ffffff;
+            --card-bg: #f8f9fa;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary-color: #6b8cff;
+            --secondary-color: #343a40;
+            --text-color: #f8f9fa;
+            --light-text: #adb5bd;
+            --bg-color: #212529;
+            --card-bg: #343a40;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .credits {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        .credits a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .credits a:hover {
+            text-decoration: underline;
+        }
+
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .app-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: none;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+        }
+
+        .app-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 992px) {
+            .app-content {
+                flex-direction: row;
+            }
+        }
+
+        .form-section {
+            flex: 1;
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .preview-section {
+            flex: 1;
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .image-upload-container {
+            margin-bottom: 15px;
+        }
+
+        .image-upload-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .image-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            margin: 0 auto;
+            display: block;
+        }
+
+        .cropper-modal {
+            background-color: var(--bg-color);
+        }
+
+        .cv-preview {
+            background-color: white;
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (max-width: 992px) {
+            .cv-preview {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 210 / 297;
+            }
+        }
+
+        .cv-left {
+            width: 35%;
+            background-color: #f5f5f5;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cv-right {
+            width: 65%;
+            padding: 30px;
+        }
+
+        .cv-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 3px solid var(--primary-color);
+        }
+
+        .cv-section {
+            margin-bottom: 20px;
+        }
+
+        .cv-section-title {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .cv-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .cv-contact-icon {
+            color: var(--primary-color);
+            width: 20px;
+            text-align: center;
+        }
+
+        .cv-skills-list, .cv-languages-list {
+            list-style-type: none;
+        }
+
+        .cv-skills-list li, .cv-languages-list li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .cv-skills-list li::before, .cv-languages-list li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-size: 20px;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+
+        .cv-experience-item, .cv-education-item {
+            margin-bottom: 15px;
+        }
+
+        .cv-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cv-item-date {
+            color: var(--light-text);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .cv-declaration {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            left: calc(35% + 30px);
+            font-style: italic;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .template-selector {
+            margin-bottom: 20px;
+        }
+
+        .template-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .template-option {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .template-option:hover {
+            transform: scale(1.05);
+        }
+
+        .template-option.active {
+            border-color: var(--primary-color);
+        }
+
+        .template-blue {
+            background: linear-gradient(135deg, #4a6bff 0%, #6b8cff 100%);
+        }
+
+        .template-green {
+            background: linear-gradient(135deg, #28a745 0%, #5cb85c 100%);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .cropper-container {
+            width: 100%;
+            height: 400px;
+        }
+
+        .cropper-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: flex-end;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="credits">
+            <span>Made by Nishikant Xalxo</span>
+            <a href="https://www.instagram.com/nishix_vamp" target="_blank">
+                <i class="fab fa-instagram"></i> @nishix_vamp
+            </a>
+        </div>
+
+        <div class="app-header">
+            <h1 class="app-title">Modern CV Maker</h1>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i> Dark Mode
+            </button>
+        </div>
+
+        <div class="app-content">
+            <div class="form-section">
+                <div class="template-selector">
+                    <label>Select Template</label>
+                    <div class="template-options">
+                        <div class="template-option template-blue active" data-template="blue"></div>
+                        <div class="template-option template-green" data-template="green"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" class="form-control" placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="designation">Designation</label>
+                    <input type="text" id="designation" class="form-control" placeholder="Software Engineer">
+                </div>
+
+                <div class="image-upload-container">
+                    <label>Profile Picture</label>
+                    <div class="image-upload-wrapper">
+                        <img id="imagePreview" class="image-preview" src="https://via.placeholder.com/150" alt="Preview">
+                        <button class="btn btn-block" id="uploadPhotoBtn">
+                            <i class="fas fa-upload"></i> Upload Photo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="john.doe@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="+1 234 567 890">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" class="form-control" placeholder="123 Main St, City, Country">
+                </div>
+
+                <div class="form-group">
+                    <label for="nationality">Nationality</label>
+                    <input type="text" id="nationality" class="form-control" placeholder="American">
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="gender" class="form-control">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Profile Section</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="objective" name="profileType" value="objective" checked>
+                            <label for="objective">Objective</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="summary" name="profileType" value="summary">
+                            <label for="summary">Summary</label>
+                        </div>
+                    </div>
+                    <textarea id="profileText" class="form-control" placeholder="Write your objective or summary here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="skills">Skills (comma separated)</label>
+                    <input type="text" id="skills" class="form-control" placeholder="HTML, CSS, JavaScript, React">
+                </div>
+
+                <div class="form-group">
+                    <label for="languages">Languages (comma separated)</label>
+                    <input type="text" id="languages" class="form-control" placeholder="English, Spanish, French">
+                </div>
+
+                <div class="form-group">
+                    <label for="experience">Work Experience</label>
+                    <textarea id="experience" class="form-control" placeholder="Company Name - Position (Year-Year)
+• Responsibility 1
+• Responsibility 2"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="education">Education</label>
+                    <textarea id="education" class="form-control" placeholder="University Name - Degree (Year-Year)
+• Relevant coursework or achievement"></textarea>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn" id="downloadBtn">
+                        <i class="fas fa-download"></i> Download CV
+                    </button>
+                    <button class="btn btn-secondary" id="shareBtn">
+                        <i class="fas fa-share"></i> Share
+                    </button>
+                </div>
+            </div>
+
+            <div class="preview-section">
+                <div class="cv-preview" id="cvPreview">
+                    <div class="cv-left">
+                        <img id="cvPhoto" class="cv-photo" src="https://via.placeholder.com/150" alt="Profile Photo">
+                        
+                        <div class="cv-section">
+                            <div class="cv-section-title">Contact</div>
+                            <div id="cvContactInfo">
+                                <!-- Contact info will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <div class="cv-section-title">Skills</div>
+                            <ul class="cv-skills-list" id="cvSkills">
+                                <!-- Skills will be populated here -->
+                            </ul>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <div class="cv-section-title">Languages</div>
+                            <ul class="cv-languages-list" id="cvLanguages">
+                                <!-- Languages will be populated here -->
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="cv-right">
+                        <div class="cv-header">
+                            <h1 id="cvName">John Doe</h1>
+                            <h2 id="cvDesignation">Software Engineer</h2>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <div class="cv-section-title" id="cvProfileTitle">Objective</div>
+                            <div id="cvProfileText">
+                                <!-- Objective/Summary will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <div class="cv-section-title">Work Experience</div>
+                            <div id="cvExperience">
+                                <!-- Experience will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <div class="cv-section-title">Education</div>
+                            <div id="cvEducation">
+                                <!-- Education will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="cv-declaration">
+                            I hereby declare that the above information is true to the best of my knowledge.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Cropper Modal -->
+    <div class="modal" id="imageCropperModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Crop Profile Picture</h3>
+                <button class="modal-close" id="closeCropperModal">&times;</button>
+            </div>
+            <div class="cropper-container">
+                <img id="imageToCrop" src="" alt="">
+            </div>
+            <div class="cropper-actions">
+                <button class="btn btn-secondary" id="cancelCrop">Cancel</button>
+                <button class="btn" id="applyCrop">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const themeToggle = document.getElementById('themeToggle');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const uploadPhotoBtn = document.getElementById('uploadPhotoBtn');
+            const imagePreview = document.getElementById('imagePreview');
+            const cvPhoto = document.getElementById('cvPhoto');
+            const imageCropperModal = document.getElementById('imageCropperModal');
+            const imageToCrop = document.getElementById('imageToCrop');
+            const closeCropperModal = document.getElementById('closeCropperModal');
+            const cancelCrop = document.getElementById('cancelCrop');
+            const applyCrop = document.getElementById('applyCrop');
+            const toast = document.getElementById('toast');
+            const templateOptions = document.querySelectorAll('.template-option');
+            
+            // Form fields
+            const formFields = {
+                fullName: document.getElementById('fullName'),
+                designation: document.getElementById('designation'),
+                email: document.getElementById('email'),
+                phone: document.getElementById('phone'),
+                address: document.getElementById('address'),
+                nationality: document.getElementById('nationality'),
+                dob: document.getElementById('dob'),
+                gender: document.getElementById('gender'),
+                profileType: document.querySelectorAll('input[name="profileType"]'),
+                profileText: document.getElementById('profileText'),
+                skills: document.getElementById('skills'),
+                languages: document.getElementById('languages'),
+                experience: document.getElementById('experience'),
+                education: document.getElementById('education')
+            };
+            
+            // CV Preview elements
+            const cvPreviewElements = {
+                name: document.getElementById('cvName'),
+                designation: document.getElementById('cvDesignation'),
+                contactInfo: document.getElementById('cvContactInfo'),
+                profileTitle: document.getElementById('cvProfileTitle'),
+                profileText: document.getElementById('cvProfileText'),
+                skills: document.getElementById('cvSkills'),
+                languages: document.getElementById('cvLanguages'),
+                experience: document.getElementById('cvExperience'),
+                education: document.getElementById('cvEducation')
+            };
+            
+            // Variables
+            let cropper;
+            let currentTemplate = 'blue';
+            
+            // Initialize the app
+            function init() {
+                // Load saved data from localStorage
+                loadFromLocalStorage();
+                
+                // Set up event listeners
+                setupEventListeners();
+                
+                // Initial preview update
+                updateCVPreview();
+            }
+            
+            // Set up event listeners
+            function setupEventListeners() {
+                // Theme toggle
+                themeToggle.addEventListener('click', toggleTheme);
+                
+                // Download button
+                downloadBtn.addEventListener('click', generatePDF);
+                
+                // Share button
+                shareBtn.addEventListener('click', shareAppLink);
+                
+                // Image upload
+                uploadPhotoBtn.addEventListener('click', () => {
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = 'image/*';
+                    fileInput.onchange = handleImageUpload;
+                    fileInput.click();
+                });
+                
+                // Form field changes
+                Object.values(formFields).forEach(field => {
+                    if (field instanceof NodeList) {
+                        field.forEach(radio => {
+                            radio.addEventListener('change', updateCVPreview);
+                        });
+                    } else {
+                        field.addEventListener('input', updateCVPreview);
+                    }
+                });
+                
+                // Image cropper modal
+                closeCropperModal.addEventListener('click', closeImageCropper);
+                cancelCrop.addEventListener('click', closeImageCropper);
+                applyCrop.addEventListener('click', applyImageCrop);
+                
+                // Template selection
+                templateOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        templateOptions.forEach(opt => opt.classList.remove('active'));
+                        option.classList.add('active');
+                        currentTemplate = option.dataset.template;
+                        updateCVPreview();
+                    });
+                });
+            }
+            
+            // Toggle between light and dark theme
+            function toggleTheme() {
+                document.body.classList.toggle('dark-mode');
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                themeToggle.innerHTML = isDarkMode 
+                    ? '<i class="fas fa-sun"></i> Light Mode' 
+                    : '<i class="fas fa-moon"></i> Dark Mode';
+                saveToLocalStorage();
+            }
+            
+            // Handle image upload
+            function handleImageUpload(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                if (!file.type.match('image.*')) {
+                    showToast('Please select an image file');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    imageToCrop.src = event.target.result;
+                    openImageCropper();
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            // Open image cropper modal
+            function openImageCropper() {
+                imageCropperModal.style.display = 'flex';
+                
+                // Initialize cropper after image is loaded
+                imageToCrop.onload = () => {
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+                    
+                    cropper = new Cropper(imageToCrop, {
+                        aspectRatio: 1,
+                        viewMode: 1,
+                        autoCropArea: 0.8,
+                        responsive: true,
+                        guides: false,
+                        center: false,
+                        background: false,
+                        movable: true,
+                        rotatable: true,
+                        scalable: true,
+                        zoomable: true,
+                        zoomOnTouch: true,
+                        zoomOnWheel: true,
+                        wheelZoomRatio: 0.1,
+                        cropBoxMovable: true,
+                        cropBoxResizable: true,
+                        toggleDragModeOnDblclick: false,
+                        minContainerWidth: 300,
+                        minContainerHeight: 300,
+                        minCanvasWidth: 300,
+                        minCanvasHeight: 300,
+                        minCropBoxWidth: 150,
+                        minCropBoxHeight: 150,
+                    });
+                };
+            }
+            
+            // Close image cropper modal
+            function closeImageCropper() {
+                imageCropperModal.style.display = 'none';
+                if (cropper) {
+                    cropper.destroy();
+                    cropper = null;
+                }
+            }
+            
+            // Apply image crop
+            function applyImageCrop() {
+                if (!cropper) return;
+                
+                const canvas = cropper.getCroppedCanvas({
+                    width: 300,
+                    height: 300,
+                    minWidth: 150,
+                    minHeight: 150,
+                    maxWidth: 1000,
+                    maxHeight: 1000,
+                    fillColor: '#fff',
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high',
+                });
+                
+                if (!canvas) {
+                    showToast('Could not crop image');
+                    return;
+                }
+                
+                const croppedImage = canvas.toDataURL('image/jpeg', 0.9);
+                imagePreview.src = croppedImage;
+                cvPhoto.src = croppedImage;
+                closeImageCropper();
+                saveToLocalStorage();
+            }
+            
+            // Update CV preview
+            function updateCVPreview() {
+                // Personal info
+                cvPreviewElements.name.textContent = formFields.fullName.value || 'John Doe';
+                cvPreviewElements.designation.textContent = formFields.designation.value || 'Software Engineer';
+                
+                // Contact info
+                let contactHTML = '';
+                if (formFields.email.value) {
+                    contactHTML += `
+                        <div class="cv-contact-item">
+                            <div class="cv-contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div>${formFields.email.value}</div>
+                        </div>
+                    `;
+                }
+                if (formFields.phone.value) {
+                    contactHTML += `
+                        <div class="cv-contact-item">
+                            <div class="cv-contact-icon"><i class="fas fa-phone"></i></div>
+                            <div>${formFields.phone.value}</div>
+                        </div>
+                    `;
+                }
+                if (formFields.address.value) {
+                    contactHTML += `
+                        <div class="cv-contact-item">
+                            <div class="cv-contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>${formFields.address.value}</div>
+                        </div>
+                    `;
+                }
+                if (formFields.nationality.value) {
+                    contactHTML += `
+                        <div class="cv-contact-item">
+                            <div class="cv-contact-icon"><i class="fas fa-globe"></i></div>
+                            <div>${formFields.nationality.value}</div>
+                        </div>
+                    `;
+                }
+                if (formFields.dob.value) {
+                    contactHTML += `
+                        <div class="cv-contact-item">
+                            <div class="cv-contact-icon"><i class="fas fa-birthday-cake"></i></div>
+                            <div>${formatDate(formFields.dob.value)}</div>
+                        </div>
+                    `;
+                }
+                if (formFields.gender.value) {
+                    contactHTML += `
+                        <div class="cv-contact-item">
+                            <div class="cv-contact-icon"><i class="fas fa-user"></i></div>
+                            <div>${formFields.gender.value}</div>
+                        </div>
+                    `;
+                }
+                cvPreviewElements.contactInfo.innerHTML = contactHTML || '<div class="cv-contact-item">No contact information provided</div>';
+                
+                // Profile section (Objective/Summary)
+                const profileType = document.querySelector('input[name="profileType"]:checked').value;
+                cvPreviewElements.profileTitle.textContent = profileType.charAt(0).toUpperCase() + profileType.slice(1);
+                cvPreviewElements.profileText.innerHTML = formFields.profileText.value 
+                    ? `<p>${formFields.profileText.value.replace(/\n/g, '<br>')}</p>` 
+                    : `<p>No ${profileType} provided</p>`;
+                
+                // Skills
+                const skills = formFields.skills.value.split(',').map(skill => skill.trim()).filter(skill => skill);
+                cvPreviewElements.skills.innerHTML = skills.length 
+                    ? skills.map(skill => `<li>${skill}</li>`).join('') 
+                    : '<li>No skills listed</li>';
+                
+                // Languages
+                const languages = formFields.languages.value.split(',').map(lang => lang.trim()).filter(lang => lang);
+                cvPreviewElements.languages.innerHTML = languages.length 
+                    ? languages.map(lang => `<li>${lang}</li>`).join('') 
+                    : '<li>No languages listed</li>';
+                
+                // Work Experience
+                cvPreviewElements.experience.innerHTML = formFields.experience.value 
+                    ? formatMultiLineText(formFields.experience.value) 
+                    : '<div class="cv-experience-item">No work experience provided</div>';
+                
+                // Education
+                cvPreviewElements.education.innerHTML = formFields.education.value 
+                    ? formatMultiLineText(formFields.education.value) 
+                    : '<div class="cv-education-item">No education information provided</div>';
+                
+                // Apply template colors
+                applyTemplateColors();
+                
+                // Save to localStorage
+                saveToLocalStorage();
+            }
+            
+            // Format date from YYYY-MM-DD to DD/MM/YYYY
+            function formatDate(dateString) {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-GB');
+            }
+            
+            // Format multi-line text with bullet points
+            function formatMultiLineText(text) {
+                return text.split('\n').map(line => {
+                    if (line.trim().startsWith('•')) {
+                        return `<div style="margin-left: 20px;">${line}</div>`;
+                    } else if (line.trim() === '') {
+                        return '<div style="height: 10px;"></div>';
+                    } else {
+                        return `<div class="cv-item-title">${line}</div>`;
+                    }
+                }).join('');
+            }
+            
+            // Apply template colors to CV
+            function applyTemplateColors() {
+                const cvSections = document.querySelectorAll('.cv-section-title');
+                const primaryColor = currentTemplate === 'blue' ? '#4a6bff' : '#28a745';
+                
+                cvSections.forEach(section => {
+                    section.style.backgroundColor = primaryColor;
+                });
+                
+                document.querySelectorAll('.cv-contact-icon i, .cv-skills-list li::before, .cv-languages-list li::before').forEach(el => {
+                    if (el.style) {
+                        el.style.color = primaryColor;
+                    }
+                });
+                
+                cvPhoto.style.borderColor = primaryColor;
+            }
+            
+            // Generate PDF from CV preview
+            function generatePDF() {
+                const element = document.getElementById('cvPreview');
+                const opt = {
+                    margin: 0,
+                    filename: `${formFields.fullName.value || 'my-cv'}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, logging: true, useCORS: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                
+                // Show loading state
+                downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+                downloadBtn.disabled = true;
+                
+                html2pdf().from(element).set(opt).save().then(() => {
+                    downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download CV';
+                    downloadBtn.disabled = false;
+                    showToast('CV downloaded successfully!');
+                });
+            }
+            
+            // Share app link
+            function shareAppLink() {
+                const url = window.location.href;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Modern CV Maker',
+                        text: 'Create a professional CV with this awesome tool!',
+                        url: url
+                    }).catch(err => {
+                        console.log('Error sharing:', err);
+                        copyToClipboard(url);
+                    });
+                } else {
+                    copyToClipboard(url);
+                }
+            }
+            
+            // Copy text to clipboard
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('Link copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                    showToast('Failed to copy link');
+                });
+            }
+            
+            // Show toast notification
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Save form data to localStorage
+            function saveToLocalStorage() {
+                const formData = {};
+                
+                // Save all form field values
+                Object.keys(formFields).forEach(key => {
+                    if (formFields[key] instanceof NodeList) {
+                        formData[key] = document.querySelector(`input[name="${key}"]:checked`).value;
+                    } else {
+                        formData[key] = formFields[key].value;
+                    }
+                });
+                
+                // Save theme preference
+                formData.darkMode = document.body.classList.contains('dark-mode');
+                
+                // Save template preference
+                formData.template = currentTemplate;
+                
+                // Save profile picture if changed
+                if (imagePreview.src && !imagePreview.src.includes('via.placeholder.com')) {
+                    formData.profilePicture = imagePreview.src;
+                }
+                
+                localStorage.setItem('cvMakerData', JSON.stringify(formData));
+            }
+            
+            // Load form data from localStorage
+            function loadFromLocalStorage() {
+                const savedData = localStorage.getItem('cvMakerData');
+                if (!savedData) return;
+                
+                const formData = JSON.parse(savedData);
+                
+                // Load all form field values
+                Object.keys(formData).forEach(key => {
+                    if (formFields[key]) {
+                        if (formFields[key] instanceof NodeList) {
+                            document.querySelector(`input[name="${key}"][value="${formData[key]}"]`).checked = true;
+                        } else {
+                            formFields[key].value = formData[key];
+                        }
+                    }
+                });
+                
+                // Load theme preference
+                if (formData.darkMode) {
+                    document.body.classList.add('dark-mode');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+                }
+                
+                // Load template preference
+                if (formData.template) {
+                    currentTemplate = formData.template;
+                    templateOptions.forEach(option => {
+                        option.classList.toggle('active', option.dataset.template === currentTemplate);
+                    });
+                }
+                
+                // Load profile picture
+                if (formData.profilePicture) {
+                    imagePreview.src = formData.profilePicture;
+                    cvPhoto.src = formData.profilePicture;
+                }
+            }
+            
+            // Initialize the app
+            init();
+        });
+    </script>
+</body>
+</html>
