@@ -1,0 +1,56 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.app-title {
+    font-size: 24px;
+    color: #4a6bff;
+}
+
+.theme-toggle {
+    background: #fff;
+    border: 2px solid #4a6bff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: #4a6bff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.app-content {
+    display: flex;
+    gap: 20px;
+}
+
+.form-section, .preview-section {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cv-preview {
+    padding: 20px;
+    border: 2px solid #4a6bff;
+    background: #fff;
+    font-size: 14px;
+    line-height: 1.6;
+}
