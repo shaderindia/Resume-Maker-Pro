@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>EuroPass/Indian CV Maker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header>
+    <h1>EuroPass/Indian CV Maker</h1>
+    <div>
+      <button id="themeToggle"><i class="fas fa-moon"></i></button>
+      <span>Made by <a href="https://instagram.com/nishix_vamp" target="_blank">@nishix_vamp</a></span>
+    </div>
+  </header>
+  <main>
+    <section class="form-section">
+      <label>CV Style:
+        <select id="cvStyle"><option value="euro">EuroPass Style</option><option value="indian">Indian Style</option></select>
+      </label>
+      <label>Full Name: <input type="text" id="fullName" /></label>
+      <label>Desired Position / Occupation: <input type="text" id="desiredPosition" /></label>
+      <label>Email: <input type="email" id="email"/></label>
+      <label>Mobile Number: <input type="tel" id="phone"/></label>
+      <label>LinkedIn / Portfolio / GitHub: <input type="text" id="website"/></label>
+      <label>Location (City, State): <input type="text" id="location"/></label>
+      <label>Address: <input type="text" id="address"/></label>
+      <label>Father's Name: <input type="text" id="fatherName"/></label>
+      <label>Nationality: <input type="text" id="nationality"/></label>
+      <label>Date of Birth: <input type="date" id="dob"/></label>
+      <label>Gender:
+        <select id="gender"><option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option></select>
+      </label>
+      <label>Marital Status: <select id="maritalStatus"><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select></label>
+      <label>About Me / Career Objective: <textarea id="about"></textarea></label>
+      <label>Professional Summary: <textarea id="summary"></textarea></label>
+      <label>Work Experience: <textarea id="experience" placeholder="Job Title – Company Name&#10;Location | Month/Year – Month/Year&#10;• Responsibility..."></textarea></label>
+      <label>Education: <textarea id="education" placeholder="Degree – Institution Name&#10;Year of passing | Percentage/CGPA"></textarea></label>
+      <label>Skills (comma-separated): <input type="text" id="skills"/></label>
+      <label>Mother Tongue(s): <input type="text" id="motherTongue"/></label>
+      <label>Other Language(s): <textarea id="otherLanguages" placeholder="English (C2) (C2) (C2) (C2) (C2)"></textarea></label>
+      <label>Communication Skills: <textarea id="commSkills"></textarea></label>
+      <label>Organisational / Managerial Skills: <textarea id="orgSkills"></textarea></label>
+      <label>Job-related Skills: <textarea id="jobSkills"></textarea></label>
+      <label>Digital Competence: <textarea id="digitalSkills" placeholder="Category: Skills"></textarea></label>
+      <label>Certifications / Trainings: <textarea id="certifications"></textarea></label>
+      <label>Publications: <textarea id="publications"></textarea></label>
+      <label>Projects / Internships: <textarea id="projects"></textarea></label>
+      <label>Conferences: <textarea id="conferences"></textarea></label>
+      <label>References: <textarea id="references"></textarea></label>
+      <label>Declaration Date: <input type="date" id="decDate"/></label>
+      <label>Declaration Place: <input type="text" id="decPlace"/></label>
+
+      <div class="photo-upload">
+        <img id="profileImage" src="assets/placeholder.jpg" alt="Profile Photo"/>
+        <input type="file" id="photoInput" accept="image/*" hidden/>
+        <button id="uploadBtn"><i class="fas fa-upload"></i> Upload Photo</button>
+        <p class="note">Upload twice if not showing.</p>
+      </div>
+
+      <button id="generatePreview">Generate Preview</button>
+    </section>
+
+    <section class="preview-section-wrapper" style="display:none">
+      <div id="cvPreview" class="cv-preview"></div>
+      <div class="preview-actions">
+        <button id="downloadPDF">Download PDF</button>
+        <button id="downloadJPG">Download JPG</button>
+        <button id="shareBtn">Share</button>
+        <button id="resetBtn">Reset Form</button>
+        <button id="closePreview">Close Preview</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="cropModal" class="modal">
+    <div class="modal-content">
+      <img id="cropperImage"/>
+      <div class="modal-buttons">
+        <button id="cropCancel">Cancel</button>
+        <button id="cropApply">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
