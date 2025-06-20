@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Maker - Build Your Professional CV</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --secondary-color: #6c757d;
+    --secondary-hover: #545b62;
+    --danger-color: #dc3545;
+    --danger-hover: #b02a37;
+    --success-color: #28a745;
+    
+    --bg-color: #f0f2f5;
+    --form-bg-color: #ffffff;
+    --text-color: #212529;
+    --label-color: #495057;
+    --border-color: #ced4da;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --icon-color: #6c757d;
+    --icon-hover-color: #343a40;
+    --toast-bg: #333;
+    --toast-text: #fff;
+}
+
+[data-theme="dark"] {
+    --primary-color: #0d6efd;
+    --primary-hover: #3385fd;
+    --secondary-color: #6c757d;
+    --secondary-hover: #868e96;
+    --danger-color: #dc3545;
+    --danger-hover: #e45d6a;
+
+    --bg-color: #121212;
+    --form-bg-color: #1e1e1e;
+    --text-color: #e0e0e0;
+    --label-color: #adb5bd;
+    --border-color: #495057;
+    --shadow-color: rgba(255, 255, 255, 0.05);
+    --icon-color: #adb5bd;
+    --icon-hover-color: #f8f9fa;
+    --toast-bg: #f8f9fa;
+    --toast-text: #1e1e1e;
+}
+
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Main Layout */
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 20px;
+}
+
+.form-container {
+    flex: 1;
+    min-width: 320px;
+    background-color: var(--form-bg-color);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    height: fit-content;
+}
+
+.preview-container-wrapper {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: sticky;
+    top: 20px;
+}
+
+@media (max-width: 992px) {
+    .main-container {
+        flex-direction: column;
+    }
+    .preview-container-wrapper {
+        position: static;
+    }
+}
+
+/* Form Styling */
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-header h1 {
+    font-size: 1.8em;
+    font-weight: 500;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: var(--icon-color);
+    transition: color 0.2s;
+}
+#theme-toggle:hover {
+    color: var(--icon-hover-color);
+}
+
+fieldset {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-weight: 500;
+    padding: 0 10px;
+    color: var(--primary-color);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    color: var(--label-color);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="url"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+.btn-primary { background-color: var(--primary-color); color: white; }
+.btn-primary:hover { background-color: var(--primary-hover); }
+
+.btn-secondary { background-color: var(--secondary-color); color: white; }
+.btn-secondary:hover { background-color: var(--secondary-hover); }
+
+.btn-danger { background-color: var(--danger-color); color: white; }
+.btn-danger:hover { background-color: var(--danger-hover); }
+
+.btn-add {
+    margin-top: 10px;
+    background-color: var(--success-color);
+    color: white;
+    width: 100%;
+    justify-content: center;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.form-actions button {
+    flex-grow: 1;
+}
+
+/* Dynamic Field Styling */
+.dynamic-item {
+    padding: 15px;
+    border: 1px dashed var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.btn-remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: var(--danger-color);
+    font-size: 1.2em;
+}
+
+/* Photo Preview */
+#photo-preview-container {
+    margin-top: 10px;
+}
+#photo-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+}
+
+
+/* Preview Section */
+.preview-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.cv-a4 {
+    background-color: #fff;
+    width: 100%;
+    max-width: 600px; /* Controls on-screen size */
+    aspect-ratio: 210 / 297;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    overflow: hidden;
+    color: #000;
+    transform-origin: top center;
+}
+
+/* Print Mode for Download - Temporarily applied by JS */
+.print-mode {
+    width: 210mm !important;
+    height: 297mm !important;
+    max-width: none !important;
+    aspect-ratio: auto !important;
+    margin: 0;
+    box-shadow: none !important;
+}
+
+/* CV Content Styles (Shared) */
+.cv-content {
+    width: 100%;
+    height: 100%;
+    padding: 15mm; /* A4 standard margin */
+    font-size: 10pt; /* Standard print font size */
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+}
+.cv-content h1, .cv-content h2, .cv-content h3, .cv-content h4 {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+.cv-section { margin-bottom: 5mm; }
+.cv-section-title {
+    font-size: 14pt;
+    font-weight: 700;
+    color: #333;
+    border-bottom: 1.5pt solid #333;
+    padding-bottom: 1.5mm;
+    margin-bottom: 3mm;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.cv-item { margin-bottom: 3mm; }
+.cv-item h3 { font-size: 11pt; font-weight: 500; }
+.cv-item p { margin: 0; }
+.cv-item .date { font-style: italic; color: #555; font-size: 9pt; }
+
+/* EuroPass Style Specifics */
+.europass-style .cv-content {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+.europass-style .left-column {
+    background-color: #f2f2f2;
+    width: 35%;
+    padding: 10mm;
+    display: flex;
+    flex-direction: column;
+    gap: 8mm;
+    color: #333;
+}
+.europass-style .right-column {
+    width: 65%;
+    padding: 10mm;
+    display: flex;
+    flex-direction: column;
+    gap: 8mm;
+}
+.europass-style .cv-photo {
+    width: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 4px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+.europass-style .personal-info h1 { font-size: 18pt; font-weight: 700; }
+.europass-style .contact-info p { display: flex; align-items: center; gap: 2mm; margin-bottom: 2mm; font-size: 9pt; }
+.europass-style .contact-info i { width: 4mm; text-align: center; color: var(--primary-color); }
+.europass-style .cv-section-title { border-color: var(--primary-color); color: var(--primary-color); font-size: 13pt; }
+.europass-style .work-item h3 { font-size: 12pt; font-weight: 700; }
+.europass-style .work-item .company { font-weight: 500; }
+
+/* Indian Style Specifics */
+.indian-style .cv-header {
+    text-align: center;
+    padding-bottom: 5mm;
+    border-bottom: 2px solid #000;
+    margin-bottom: 5mm;
+}
+.indian-style .cv-photo {
+    width: 35mm;
+    height: 35mm;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    margin: 0 auto 3mm;
+    border: 2px solid #333;
+}
+.indian-style .cv-name { font-size: 22pt; font-weight: 700; }
+.indian-style .cv-contact { font-size: 9pt; color: #444; }
+.indian-style .cv-contact a { color: #444; text-decoration: none; }
+.indian-style .cv-contact span { margin: 0 1.5mm; }
+.indian-style .cv-section-title { background-color: #f2f2f2; padding: 1.5mm 3mm; margin: 0 -3mm 3mm -3mm; font-size: 12pt; }
+.indian-style .cv-item ul { padding-left: 5mm; }
+
+/* Cropper Modal */
+#cropper-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content {
+    background-color: var(--form-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+.modal-content .img-container {
+    margin: 20px 0;
+    max-height: 50vh;
+}
+#image-to-crop {
+    max-width: 100%;
+}
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Toast Notifications */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.toast {
+    background-color: var(--toast-bg);
+    color: var(--toast-text);
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.5s, transform 0.5s;
+}
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+.toast.success { border-left: 5px solid var(--success-color); }
+.toast.error { border-left: 5px solid var(--danger-color); }
+    </style>
+</head>
+<body>
+
+    <main class="main-container">
+
+        <div class="form-container">
+            <header class="form-header">
+                <h1>CV Maker</h1>
+                <div class="controls">
+                    <button id="theme-toggle" aria-label="Toggle light/dark mode"><i class="fas fa-moon"></i></button>
+                </div>
+            </header>
+            
+            <form id="cv-form">
+                <fieldset>
+                    <legend>Personal Details</legend>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" placeholder="e.g., John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" name="dob">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+91 12345 67890">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="john.doe@example.com">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="address" placeholder="City, Country">
+                        </div>
+                         <div class="form-group full-width">
+                            <label for="linkedin">LinkedIn Profile</label>
+                            <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Profile Photo</legend>
+                    <div class="form-group">
+                        <label for="photo-input">Upload a photo for 1:1 cropping</label>
+                        <input type="file" id="photo-input" accept="image/*">
+                        <div id="photo-preview-container" style="display:none;">
+                            <img id="photo-preview" alt="Photo Preview">
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Professional Summary</legend>
+                    <div class="form-group">
+                        <textarea id="summary" name="summary" rows="4" placeholder="A brief summary of your career and skills..."></textarea>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Work Experience</legend>
+                    <div id="work-experience-container"></div>
+                    <button type="button" class="btn-add" data-section="work-experience"><i class="fas fa-plus"></i> Add Experience</button>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Education</legend>
+                    <div id="education-container"></div>
+                    <button type="button" class="btn-add" data-section="education"><i class="fas fa-plus"></i> Add Education</button>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Skills</legend>
+                    <div id="skills-container"></div>
+                    <button type="button" class="btn-add" data-section="skills"><i class="fas fa-plus"></i> Add Skill</button>
+                </fieldset>
+                
+                 <fieldset>
+                    <legend>CV Style</legend>
+                    <div class="form-group">
+                        <label for="cv-style">Choose a CV Layout</label>
+                        <select id="cv-style" name="cv-style">
+                            <option value="europass">EuroPass Style</option>
+                            <option value="indian">Indian Style</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <div class="form-actions">
+                    <button type="button" id="generate-preview" class="btn-primary"><i class="fas fa-eye"></i> Generate Preview</button>
+                    <button type="button" id="reset-form" class="btn-danger"><i class="fas fa-trash"></i> Reset Form</button>
+                    <button type="button" id="share-cv" class="btn-secondary"><i class="fas fa-share-alt"></i> Share</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="preview-container-wrapper" id="preview-wrapper" style="display: none;">
+            <div class="preview-controls">
+                <button id="download-pdf" class="btn-primary"><i class="fas fa-file-pdf"></i> PDF</button>
+                <button id="download-jpg" class="btn-secondary"><i class="fas fa-file-image"></i> JPG</button>
+                <button id="close-preview" class="btn-danger"><i class="fas fa-times"></i> Close</button>
+            </div>
+            <div id="cv-preview" class="cv-a4">
+                </div>
+        </div>
+    </main>
+
+    <div id="cropper-modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Crop Your Photo</h2>
+            <div class="img-container">
+                <img id="image-to-crop" alt="Source Image">
+            </div>
+            <div class="modal-actions">
+                <button id="crop-button" class="btn-primary">Crop</button>
+                <button id="cancel-crop" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+    // --- DOM Element Selections ---
+    const form = document.getElementById('cv-form');
+    const generatePreviewBtn = document.getElementById('generate-preview');
+    const previewWrapper = document.getElementById('preview-wrapper');
+    const cvPreview = document.getElementById('cv-preview');
+    const closePreviewBtn = document.getElementById('close-preview');
+    const resetFormBtn = document.getElementById('reset-form');
+    const downloadPdfBtn = document.getElementById('download-pdf');
+    const downloadJpgBtn = document.getElementById('download-jpg');
+    const shareBtn = document.getElementById('share-cv');
+    const themeToggle = document.getElementById('theme-toggle');
+    const photoInput = document.getElementById('photo-input');
+    const photoPreview = document.getElementById('photo-preview');
+    const photoPreviewContainer = document.getElementById('photo-preview-container');
+    
+    // Cropper Modal Elements
+    const cropperModal = document.getElementById('cropper-modal');
+    const imageToCrop = document.getElementById('image-to-crop');
+    const cropButton = document.getElementById('crop-button');
+    const cancelCropButton = document.getElementById('cancel-crop');
+    
+    // Toast container
+    const toastContainer = document.getElementById('toast-container');
+    
+    // Dynamic Section Containers
+    const workContainer = document.getElementById('work-experience-container');
+    const eduContainer = document.getElementById('education-container');
+    const skillsContainer = document.getElementById('skills-container');
+
+    // --- State Management ---
+    let cropper = null;
+    let croppedImageData = null;
+    let dynamicIdCounter = 0;
+
+    // --- Core Functions ---
+
+    /**
+     * Shows a toast notification.
+     * @param {string} message - The message to display.
+     * @param {string} type - 'success' or 'error'.
+     */
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        toastContainer.appendChild(toast);
+        
+        // Animate in
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+
+        // Animate out and remove
+        setTimeout(() => {
+            toast.classList.remove('show');
+            toast.addEventListener('transitionend', () => toast.remove());
+        }, 3000);
+    }
+    
+    /**
+     * Toggles between light and dark themes.
+     */
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('cvTheme', newTheme);
+        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    }
+    
+    /**
+     * Handles file input change for the profile photo.
+     */
+    function handlePhotoUpload(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            imageToCrop.src = event.target.result;
+            cropperModal.style.display = 'flex';
+            if (cropper) {
+                cropper.destroy();
+            }
+            cropper = new Cropper(imageToCrop, {
+                aspectRatio: 1,
+                viewMode: 1,
+                background: false,
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+
+    /**
+     * Handles the cropping action from the modal.
+     */
+    function cropImage() {
+        if (!cropper) return;
+        const canvas = cropper.getCroppedCanvas({
+            width: 300,
+            height: 300,
+            imageSmoothingQuality: 'high',
+        });
+        croppedImageData = canvas.toDataURL('image/jpeg');
+        photoPreview.src = croppedImageData;
+        photoPreviewContainer.style.display = 'block';
+        
+        cropperModal.style.display = 'none';
+        cropper.destroy();
+        cropper = null;
+        showToast('Photo cropped successfully.', 'success');
+        saveDataToLocalStorage();
+    }
+
+    /**
+     * Adds a dynamic set of fields for education, work, or skills.
+     * @param {string} section - The name of the section ('work-experience', 'education', 'skills').
+     */
+    function addDynamicItem(section) {
+        dynamicIdCounter++;
+        const container = document.getElementById(`${section}-container`);
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'dynamic-item';
+        itemDiv.id = `item-${dynamicIdCounter}`;
+
+        let content = '';
+        if (section === 'work-experience') {
+            content = `
+                <div class="form-grid">
+                    <div class="form-group full-width"><input type="text" placeholder="Job Title" name="work_title_${dynamicIdCounter}" required></div>
+                    <div class="form-group"><input type="text" placeholder="Company" name="work_company_${dynamicIdCounter}"></div>
+                    <div class="form-group"><input type="text" placeholder="Location" name="work_location_${dynamicIdCounter}"></div>
+                    <div class="form-group"><label>Start Date</label><input type="date" name="work_start_date_${dynamicIdCounter}"></div>
+                    <div class="form-group"><label>End Date</label><input type="date" name="work_end_date_${dynamicIdCounter}"></div>
+                    <div class="form-group full-width"><textarea name="work_description_${dynamicIdCounter}" rows="3" placeholder="Key responsibilities and achievements..."></textarea></div>
+                </div>
+            `;
+        } else if (section === 'education') {
+            content = `
+                <div class="form-grid">
+                    <div class="form-group full-width"><input type="text" placeholder="Degree/Certificate" name="edu_degree_${dynamicIdCounter}" required></div>
+                    <div class="form-group"><input type="text" placeholder="Institution" name="edu_institution_${dynamicIdCounter}"></div>
+                    <div class="form-group"><input type="text" placeholder="Location" name="edu_location_${dynamicIdCounter}"></div>
+                     <div class="form-group"><label>Completion Year</label><input type="text" placeholder="e.g., 2024" name="edu_year_${dynamicIdCounter}"></div>
+                </div>
+            `;
+        } else if (section === 'skills') {
+            content = `<input type="text" placeholder="e.g., JavaScript, Project Management" name="skill_${dynamicIdCounter}" required>`;
+        }
+        
+        itemDiv.innerHTML = `${content}<button type="button" class="btn-remove" data-id="${dynamicIdCounter}">&times;</button>`;
+        container.appendChild(itemDiv);
+    }
+    
+    /**
+     * Gathers all form data into a structured object.
+     * @returns {object} The collected form data.
+     */
+    function getFormData() {
+        const formData = new FormData(form);
+        const data = {};
+        for (let [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+        
+        // Collect dynamic items
+        data.workExperience = [];
+        document.querySelectorAll('#work-experience-container .dynamic-item').forEach(item => {
+            const id = item.id.split('-')[1];
+            data.workExperience.push({
+                title: form.querySelector(`[name="work_title_${id}"]`).value,
+                company: form.querySelector(`[name="work_company_${id}"]`).value,
+                location: form.querySelector(`[name="work_location_${id}"]`).value,
+                startDate: form.querySelector(`[name="work_start_date_${id}"]`).value,
+                endDate: form.querySelector(`[name="work_end_date_${id}"]`).value,
+                description: form.querySelector(`[name="work_description_${id}"]`).value,
+            });
+        });
+
+        data.education = [];
+        document.querySelectorAll('#education-container .dynamic-item').forEach(item => {
+            const id = item.id.split('-')[1];
+            data.education.push({
+                degree: form.querySelector(`[name="edu_degree_${id}"]`).value,
+                institution: form.querySelector(`[name="edu_institution_${id}"]`).value,
+                location: form.querySelector(`[name="edu_location_${id}"]`).value,
+                year: form.querySelector(`[name="edu_year_${id}"]`).value,
+            });
+        });
+
+        data.skills = [];
+        document.querySelectorAll('#skills-container .dynamic-item').forEach(item => {
+            const id = item.id.split('-')[1];
+            const skillValue = form.querySelector(`[name="skill_${id}"]`).value;
+            if (skillValue) data.skills.push(skillValue);
+        });
+        
+        return data;
+    }
+
+    /**
+     * Populates the CV preview with data based on the selected style.
+     */
+    function generatePreview() {
+        if (!form.checkValidity()) {
+            showToast('Please fill all required fields.', 'error');
+            form.reportValidity();
+            return;
+        }
+
+        const data = getFormData();
+        const style = document.getElementById('cv-style').value;
+        cvPreview.className = `cv-a4 ${style}-style`;
+
+        let cvHTML = '';
+        if (style === 'europass') {
+            cvHTML = generateEuropassHTML(data);
+        } else {
+            cvHTML = generateIndianHTML(data);
+        }
+
+        cvPreview.innerHTML = cvHTML;
+        previewWrapper.style.display = 'flex';
+        
+        // Scroll to preview on mobile
+        if (window.innerWidth <= 992) {
+            previewWrapper.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+    
+    function generateEuropassHTML(data) {
+        return `
+            <div class="cv-content">
+                <div class="left-column">
+                    <div class="personal-info">
+                        ${croppedImageData ? `<div class="cv-photo" style="background-image: url(${croppedImageData})"></div>` : ''}
+                        <h1>${data.name || ''}</h1>
+                    </div>
+                    <div class="contact-info cv-section">
+                        <h3>Contact</h3>
+                        ${data.address ? `<p><i class="fas fa-map-marker-alt"></i> ${data.address}</p>`: ''}
+                        ${data.phone ? `<p><i class="fas fa-phone"></i> ${data.phone}</p>`: ''}
+                        ${data.email ? `<p><i class="fas fa-envelope"></i> ${data.email}</p>`: ''}
+                        ${data.linkedin ? `<p><i class="fab fa-linkedin"></i> <a href="${data.linkedin}" target="_blank">LinkedIn</a></p>`: ''}
+                    </div>
+                     <div class="skills-info cv-section">
+                        <h3 class="cv-section-title">Skills</h3>
+                        <ul>
+                            ${data.skills.map(skill => `<li>${skill}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+                <div class="right-column">
+                    ${data.summary ? `
+                    <div class="cv-section">
+                        <h2 class="cv-section-title">Professional Summary</h2>
+                        <p>${data.summary}</p>
+                    </div>` : ''}
+                    <div class="cv-section">
+                        <h2 class="cv-section-title">Work Experience</h2>
+                        ${data.workExperience.map(work => `
+                            <div class="cv-item work-item">
+                                <h3>${work.title}</h3>
+                                <p class="company">${work.company} - ${work.location}</p>
+                                <p class="date">${work.startDate} to ${work.endDate || 'Present'}</p>
+                                <ul>${work.description.split('\n').map(line => `<li>${line}</li>`).join('')}</ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="cv-section">
+                        <h2 class="cv-section-title">Education</h2>
+                        ${data.education.map(edu => `
+                            <div class="cv-item">
+                                <h3>${edu.degree}</h3>
+                                <p>${edu.institution}, ${edu.location}</p>
+                                <p class="date">Completed: ${edu.year}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    function generateIndianHTML(data) {
+       return `
+            <div class="cv-content">
+                <header class="cv-header">
+                     ${croppedImageData ? `<div class="cv-photo" style="background-image: url(${croppedImageData})"></div>` : ''}
+                    <h1 class="cv-name">${data.name || ''}</h1>
+                    <p class="cv-contact">
+                        <a href="tel:${data.phone}">${data.phone}</a>
+                        <span>|</span>
+                        <a href="mailto:${data.email}">${data.email}</a>
+                        <span>|</span>
+                        <span>${data.address}</span>
+                    </p>
+                    ${data.linkedin ? `<p><a href="${data.linkedin}" target="_blank">LinkedIn Profile</a></p>` : ''}
+                </header>
+
+                ${data.summary ? `
+                <section class="cv-section">
+                    <h2 class="cv-section-title">Career Objective / Summary</h2>
+                    <p>${data.summary}</p>
+                </section>` : ''}
+
+                <section class="cv-section">
+                    <h2 class="cv-section-title">Work Experience</h2>
+                    ${data.workExperience.map(work => `
+                        <div class="cv-item">
+                            <h3>${work.title} at ${work.company}</h3>
+                            <p class="date">${work.location} | ${work.startDate} - ${work.endDate || 'Present'}</p>
+                            <ul>${work.description.split('\n').map(line => `<li>${line}</li>`).join('')}</ul>
+                        </div>
+                    `).join('')}
+                </section>
+                
+                <section class="cv-section">
+                    <h2 class="cv-section-title">Education</h2>
+                    ${data.education.map(edu => `
+                        <div class="cv-item">
+                            <h3>${edu.degree}</h3>
+                            <p>${edu.institution}, ${edu.location} (${edu.year})</p>
+                        </div>
+                    `).join('')}
+                </section>
+                
+                 <section class="cv-section">
+                    <h2 class="cv-section-title">Skills</h2>
+                    <p>${data.skills.join(', ')}</p>
+                </section>
+            </div>
+        `;
+    }
+
+    /**
+     * Downloads the CV preview as a PDF.
+     */
+    function downloadAsPDF() {
+        showToast('Preparing PDF download...', 'success');
+        const element = cvPreview;
+        element.classList.add('print-mode'); // Apply print dimensions
+
+        const opt = {
+            margin: 0,
+            filename: `CV_${getFormData().name.replace(' ', '_')}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 3, useCORS: true, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().from(element).set(opt).save().then(() => {
+            element.classList.remove('print-mode'); // Revert to screen view
+            showToast('PDF downloaded successfully!', 'success');
+        }).catch(err => {
+            element.classList.remove('print-mode');
+            showToast('Failed to download PDF.', 'error');
+            console.error(err);
+        });
+    }
+
+    /**
+     * Downloads the CV preview as a JPG image.
+     */
+    function downloadAsJPG() {
+        showToast('Preparing JPG download...', 'success');
+        const element = cvPreview;
+        element.classList.add('print-mode'); // Apply print dimensions for high quality
+
+        html2canvas(element, {
+            scale: 3, // Increase resolution
+            useCORS: true,
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `CV_${getFormData().name.replace(' ', '_')}.jpg`;
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+            element.classList.remove('print-mode'); // Revert
+            showToast('JPG downloaded successfully!', 'success');
+        }).catch(err => {
+            element.classList.remove('print-mode');
+            showToast('Failed to download JPG.', 'error');
+            console.error(err);
+        });
+    }
+
+    /**
+     * Shares the CV using the Web Share API or copies a link to the clipboard.
+     */
+    async function shareCV() {
+        const shareData = {
+            title: 'My CV',
+            text: `Check out my CV created with this awesome CV Maker!`,
+            url: window.location.href,
+        };
+
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+                showToast('CV shared successfully!', 'success');
+            } catch (err) {
+                showToast('Could not share CV.', 'error');
+            }
+        } else {
+            // Fallback: Copy link to clipboard
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                showToast('Link copied to clipboard!', 'success');
+            } catch (err) {
+                showToast('Failed to copy link.', 'error');
+            }
+        }
+    }
+    
+    /**
+     * Resets the entire form, clears local storage, and hides the preview.
+     */
+    function resetForm() {
+        if (confirm('Are you sure you want to reset everything? All data will be lost.')) {
+            form.reset();
+            localStorage.removeItem('cvData');
+            croppedImageData = null;
+            photoPreview.src = '';
+            photoPreviewContainer.style.display = 'none';
+            workContainer.innerHTML = '';
+            eduContainer.innerHTML = '';
+            skillsContainer.innerHTML = '';
+            dynamicIdCounter = 0;
+            previewWrapper.style.display = 'none';
+            showToast('Form has been reset.', 'success');
+        }
+    }
+    
+    // --- Persistence (localStorage) ---
+    
+    /**
+     * Saves all form data and the cropped image to local storage.
+     */
+    function saveDataToLocalStorage() {
+        const data = getFormData();
+        data.theme = document.documentElement.getAttribute('data-theme') || 'light';
+        data.cvStyle = document.getElementById('cv-style').value;
+        data.croppedImage = croppedImageData;
+
+        localStorage.setItem('cvData', JSON.stringify(data));
+    }
+    
+    /**
+     * Loads data from local storage on page load.
+     */
+    function loadFromLocalStorage() {
+        const savedDataJSON = localStorage.getItem('cvData');
+        if (!savedDataJSON) {
+            // Set default theme if nothing is saved
+            const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', preferredTheme);
+            themeToggle.innerHTML = preferredTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            return;
+        }
+
+        const savedData = JSON.parse(savedDataJSON);
+
+        // Restore theme
+        const theme = savedData.theme || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        themeToggle.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+
+        // Restore form fields
+        for (const key in savedData) {
+            if (form.elements[key]) {
+                form.elements[key].value = savedData[key];
+            }
+        }
+        
+        // Restore CV Style
+        document.getElementById('cv-style').value = savedData.cvStyle || 'europass';
+
+        // Restore photo
+        if (savedData.croppedImage) {
+            croppedImageData = savedData.croppedImage;
+            photoPreview.src = croppedImageData;
+            photoPreviewContainer.style.display = 'block';
+        }
+
+        // Restore dynamic sections
+        workContainer.innerHTML = '';
+        savedData.workExperience.forEach(item => {
+            addDynamicItem('work-experience');
+            const newId = dynamicIdCounter;
+            form.querySelector(`[name="work_title_${newId}"]`).value = item.title;
+            form.querySelector(`[name="work_company_${newId}"]`).value = item.company;
+            form.querySelector(`[name="work_location_${newId}"]`).value = item.location;
+            form.querySelector(`[name="work_start_date_${newId}"]`).value = item.startDate;
+            form.querySelector(`[name="work_end_date_${newId}"]`).value = item.endDate;
+            form.querySelector(`[name="work_description_${newId}"]`).value = item.description;
+        });
+
+        eduContainer.innerHTML = '';
+        savedData.education.forEach(item => {
+            addDynamicItem('education');
+            const newId = dynamicIdCounter;
+            form.querySelector(`[name="edu_degree_${newId}"]`).value = item.degree;
+            form.querySelector(`[name="edu_institution_${newId}"]`).value = item.institution;
+            form.querySelector(`[name="edu_location_${newId}"]`).value = item.location;
+            form.querySelector(`[name="edu_year_${newId}"]`).value = item.year;
+        });
+        
+        skillsContainer.innerHTML = '';
+        savedData.skills.forEach(skill => {
+            addDynamicItem('skills');
+            const newId = dynamicIdCounter;
+            form.querySelector(`[name="skill_${newId}"]`).value = skill;
+        });
+        
+        showToast('Restored your saved data!', 'success');
+    }
+
+    // --- Event Listeners ---
+    themeToggle.addEventListener('click', toggleTheme);
+    photoInput.addEventListener('change', handlePhotoUpload);
+    cropButton.addEventListener('click', cropImage);
+    cancelCropButton.addEventListener('click', () => {
+        cropperModal.style.display = 'none';
+        if (cropper) cropper.destroy();
+        cropper = null;
+    });
+
+    generatePreviewBtn.addEventListener('click', generatePreview);
+    closePreviewBtn.addEventListener('click', () => previewWrapper.style.display = 'none');
+    resetFormBtn.addEventListener('click', resetForm);
+    downloadPdfBtn.addEventListener('click', downloadAsPDF);
+    downloadJpgBtn.addEventListener('click', downloadAsJPG);
+    shareBtn.addEventListener('click', shareCV);
+    
+    // Use event delegation for dynamic "add" and "remove" buttons
+    form.addEventListener('click', (e) => {
+        if (e.target.matches('.btn-add')) {
+            e.preventDefault();
+            addDynamicItem(e.target.dataset.section);
+        }
+        if (e.target.matches('.btn-remove')) {
+            e.preventDefault();
+            document.getElementById(`item-${e.target.dataset.id}`).remove();
+        }
+    });
+
+    // Save data to localStorage on any input change
+    form.addEventListener('input', saveDataToLocalStorage);
+    
+    // --- Initial Load ---
+    loadFromLocalStorage();
+});
+    </script>
+</body>
+</html>
